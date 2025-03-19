@@ -71,7 +71,7 @@ input[type='submit'] {
 <br><br>
 
 <?php
-require_once '/var/www/wits.ruc.dk/db.php';
+require_once '/var/www/wits.ruc.dk/db.php'; // Adgang til kursets API-funktioner.
 
 $message = "";
 
