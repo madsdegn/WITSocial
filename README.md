@@ -8,4 +8,4 @@ This is currently a work in progress, but the goal is to have created a sort of 
 
 Languages: HTML, PHP, CSS
 
-The course has an API which we use to get data from the courses database. Other than that it is HTML, PHP and CSS code that displays a very simple website.
+The course has an API which we use to get data from the courses database. Other than that it is HTML, PHP and CSS code that displays a very simple website. We then upload these php files to the university server and gain access to our websites through the http://wits.ruc.dk website.
