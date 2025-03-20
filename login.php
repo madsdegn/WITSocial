@@ -94,7 +94,7 @@
             $message = ""; // Creates message variable and sets it as empty.
 
             // Check if form is submitted.
-            // Retrieve uid and password from submitted data. Set value as null if uid is not set.
+            // Retrieve uid and password from submitted data. Set value as null if uid or password is not set.
             if($_SERVER["REQUEST_METHOD"] == "POST"){
                 $uid = $_POST['uid'] ?? '';
                 $password = $_POST['password'] ?? '';
