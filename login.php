@@ -52,7 +52,7 @@
         }
 
         /* CSS selector for main login part of webpage. */
-        /* Applies styles to the <div> with id "login". */
+        /* Applies styles to the <div> with id "Login". */
         /* Styles include a CSS Box Model with a thick black border, white background and user id and password displayed left side of the box. */
         #login {
             font-family: Arial, sans-serif;
