@@ -8,24 +8,24 @@
     <head>
     <style>
 
-        /* CSS attribute selector for username field*/
-        /* Applies styles to input elements with attribute input='text' */
+        /* CSS attribute selector for username field.*/
+        /* Applies styles to input elements with attribute input='text'. */
         input[type='text'] { 
             font-size: 20px;
             font-family: Arial, sans-serif;
             text-align: center;
         }
 
-        /* CSS attribute selector for password field */
-        /* Applies styles to input elements with attribute input='password' */
+        /* CSS attribute selector for password field. */
+        /* Applies styles to input elements with attribute input='password'. */
         input[type='password'] { 
             font-size: 20px;
             font-family: Arial, sans-serif;
             text-align: center;
         }
 
-        /* CSS attribute selector for submit button field */
-        /* Applies styles to input elements with attribute input='submit' */
+        /* CSS attribute selector for submit button. */
+        /* Applies styles to input elements with attribute input='submit'. */
         input[type='submit'] { 
             font-size: 20px;
             font-family: Arial, sans-serif;
@@ -39,7 +39,7 @@
 
         /* CSS selector for WITSocial logo at top of webpage. */
         /* Applies styles to the <div> with id "Title". */
-        /* Styles include a CSS Box Model with a thick black border, white background and the name WITSocial largely displayed in the middel */
+        /* Styles include a CSS Box Model with a thick black border, white background and the name WITSocial largely displayed in the middel. */
         #title {
             font-family: Arial, sans-serif;
             text-align: center;
@@ -53,7 +53,7 @@
 
         /* CSS selector for main login part of webpage. */
         /* Applies styles to the <div> with id "login". */
-        /* Styles include a CSS Box Model with a thick black border, white background and user id and password displayed left side of the box */
+        /* Styles include a CSS Box Model with a thick black border, white background and user id and password displayed left side of the box. */
         #login {
             font-family: Arial, sans-serif;
             text-align: left;
@@ -87,12 +87,11 @@
 
         <br><br>
 
-        <!-- php section -->
+        <!-- php section. -->
         <?php
             require_once '/var/www/wits.ruc.dk/db.php'; // Access to WITS course API.
 
-            // Creates message variable and sets it as empty.
-            $message = "";
+            $message = ""; // Creates message variable and sets it as empty.
 
             // Check if form is submitted.
             // Retrieve uid and password from submitted data. Set value as null if uid is not set.
@@ -106,20 +105,19 @@
                     header("Location: secrets.php");
                     exit();
                 } else {
-                    $message = "Credentials Incorrect";
-                }
+                    $message = "<br><br>Credentials Incorrect";                }
             }
         ?>
 
-        <!-- Creates division with id login -->
-        <!-- Creates form that is secure and submits data to current URL (same page) -->
+        <!-- Creates division with id login. -->
+        <!-- Creates form that is secure and submits data to current URL (same page). -->
         <div id="login">
             <form method="POST" action="">
             
             <!-- Label for user id field. -->
             <label for="uid">User ID</label>
             
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <!-- Spaces -->
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <!-- Spaces. -->
             
             <!-- Input field for user id. -->
             <input type="text" id="uid" name="uid" value="Example">
@@ -129,23 +127,23 @@
             <!-- Label for password field. -->
             <label for="password">Password</label>
             
-            &nbsp;&nbsp;&nbsp;&nbsp; <!-- Spaces -->
+            &nbsp;&nbsp;&nbsp;&nbsp; <!-- Spaces. -->
             
             <!-- Input field for password. -->
             <input type="password" id="password" name="password" value="••••••••••">
             
             <br><br><br>
             
-            <!-- Submit button for form -->
+            <!-- Submit button for form. -->
             <input type="submit" value="Log In">
             </form>
-        </div>
-
-        <!-- Creates division with id message, creates php section and displays content of message variable. -->
-        <div id="message">
+        
+            <!-- Creates division with id message, creates php section and displays content of message variable. -->
+            <div id="message">
             <?php 
             echo $message; 
             ?>
+            </div>
         </div>
 
     </body>
