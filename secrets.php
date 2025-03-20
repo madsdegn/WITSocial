@@ -1,6 +1,6 @@
 <!-- Secrets -->
 
-<!-- Mads Degn -->
+<!-- Mads Degn, Daniel Pedersen, Liva Plougmann Sørensen, Magnus Østergaard -->
 <!-- 13/03-25 -->
 
 <!DOCTYPE html>
