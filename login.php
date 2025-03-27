@@ -97,6 +97,7 @@
             // Retrieve uid and password from submitted data. Set value as null if uid or password is not set.
             if($_SERVER["REQUEST_METHOD"] == "POST"){
                 $uid = $_POST['uid'] ?? '';
+
                 $password = $_POST['password'] ?? '';
 
                 // If login function returns true, redirect user to secrets.php file and prevent further code execution.
