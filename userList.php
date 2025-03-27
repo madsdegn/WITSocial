@@ -14,7 +14,7 @@ echo "<b>Users</b><br><br>";
 foreach ($users as $uid){ // Tager users array og laver ny variable uid for hver iteration af array.
     $user = get_user($uid); // Modtager et array med information om nuværende iterations user.
     echo "- ";
-    echo "<a href='https://wits.ruc.dk/~stud-madd/Afleveringer/Aflevering02/postList.php?uid=$uid'>"; // Gør efterfølgende tekst til link til postList.
+    echo "<a href='https://wits.ruc.dk/~stud-madd/WITSocial/postList.php?uid=$uid'>"; // Gør efterfølgende tekst til link til postList.
     echo $user ['firstname']; // Viser firstname fra user array.
     echo " ";
     echo $user ['lastname']; // Viser lastname fra user array.
