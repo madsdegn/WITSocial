@@ -74,19 +74,18 @@
         <?php
             require_once '/var/www/wits.ruc.dk/db.php'; // Access to WITS course API.
 
+            session_start();
+
             // Check if form is submitted.
             // Retrieve uid and password from submitted data. Set value as null if uid or password is not set.
             if($_SERVER["REQUEST_METHOD"] == "POST"){
-                $postTitle = $_POST['postTitle'] ?? '';
-                $postContent = $_POST['postContent'] ?? '';
+                $title = $_POST['title'] ?? '';
+                $content = $_POST['content'] ?? '';
 
-                // If login function returns true, redirect user to secrets.php file and prevent further code execution.
-                // If login function returns false, set message variable to Credentials Incorrect.
-                if(login($uid, $password)) {
-                    header("Location: secrets.php");
+                $uid = $_SESSION["uid"];
+                add_post($uid, $title, $content);
+                header("Location: userFeed.php");
                     exit();
-                } else {
-                    $message = "<br><br>Credentials Incorrect";                }
             }
         ?>
 
