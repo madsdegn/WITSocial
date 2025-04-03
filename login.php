@@ -39,7 +39,6 @@
 
         /* CSS selector for WITSocial logo at top of webpage. */
         /* Applies styles to the <div> with id "Title". */
-        /* Styles include a CSS Box Model with a thick black border, white background and the name WITSocial largely displayed in the middel. */
         #title {
             font-family: Arial, sans-serif;
             text-align: center;
@@ -53,7 +52,6 @@
 
         /* CSS selector for main login part of webpage. */
         /* Applies styles to the <div> with id "Login". */
-        /* Styles include a CSS Box Model with a thick black border, white background and user id and password displayed left side of the box. */
         #login {
             font-family: Arial, sans-serif;
             text-align: left;
@@ -91,7 +89,7 @@
         <?php
             require_once '/var/www/wits.ruc.dk/db.php'; // Access to WITS course API.
 
-            session_start();
+            session_start(); // Starts session for future use of user id and password.
 
             $message = ""; // Creates message variable and sets it as empty.
 
@@ -101,8 +99,8 @@
                 $uid = $_POST['uid'] ?? '';
                 $password = $_POST['password'] ?? '';
 
-                $_SESSION["uid"]=$uid;
-                $_SESSION["password"]=$password;
+                $_SESSION["uid"]=$uid; // Sets uid for future use.
+                $_SESSION["password"]=$password; //Sets password for future use.
 
                 // If login function returns true, redirect user to secrets.php file and prevent further code execution.
                 // If login function returns false, set message variable to Credentials Incorrect.

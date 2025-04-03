@@ -10,7 +10,6 @@
 
         /* CSS selector for WITSocial logo at top of webpage. */
         /* Applies styles to the <div> with id "Title". */
-        /* Styles include a CSS Box Model with a thick black border, white background and the name WITSocial largely displayed in the middel. */
         #title {
             font-family: Arial, sans-serif;
             text-align: center;
@@ -22,9 +21,8 @@
             font-size: 45px;
         }
 
-        /* CSS selector for main login part of webpage. */
+        /* CSS selector for main post creation part of webpage. */
         /* Applies styles to the <div> with id "createPost". */
-        /* Styles include a CSS Box Model with a thick black border, white background and user id and password displayed left side of the box. */
         #createPost {
             font-family: Arial, sans-serif;
             text-align: center;
@@ -37,7 +35,7 @@
         }
 
         /* CSS attribute selector for text fields.*/
-        /* Applies styles to input elements with attribute input='text'. */
+        /* Applies styles to input elements with attribute 'textarea'. */
         textarea { 
             font-size: 20px;
             font-family: Arial, sans-serif;
@@ -61,7 +59,7 @@
     </head>
     <body>
 
-    <br>
+        <br>
         
         <!-- Creates division with id title and writes WITS in capital lettes followed by ocial in non-capital letters. -->
         <div id="title">
@@ -74,17 +72,17 @@
         <?php
             require_once '/var/www/wits.ruc.dk/db.php'; // Access to WITS course API.
 
-            session_start();
+            session_start(); // Starts session to use user id and password from login.php.
 
             // Check if form is submitted.
-            // Retrieve uid and password from submitted data. Set value as null if uid or password is not set.
+            // Retrieve title and content from submitted data. Set value as null if title or content is not set.
             if($_SERVER["REQUEST_METHOD"] == "POST"){
                 $title = $_POST['title'] ?? '';
                 $content = $_POST['content'] ?? '';
 
-                $uid = $_SESSION["uid"];
-                add_post($uid, $title, $content);
-                header("Location: userFeed.php");
+                $uid = $_SESSION["uid"]; // Takes uid from sessions and sets it as variable.
+                add_post($uid, $title, $content); // Uses API function to create post with inserted content and uid from session.
+                header("Location: userFeed.php"); // Sends user to userFeed.php to see post just created.
                     exit();
             }
         ?>
@@ -94,13 +92,15 @@
             To create a new post, please enter a <b>Title</b> and <b>Content</b> for the post.
 
             <br><br><br>
-
+            
+            <!-- Creates form that is secure and submits data to current URL (same page). -->
             <form method="POST" action="">
             
             <b>Title</b>
 
             <br><br>
 
+            <!-- Creates field for title -->
             <textarea name="title" rows="1" cols="40"></textarea>
             
             <br><br><br>
@@ -109,6 +109,7 @@
 
             <br><br>
 
+            <!-- Creates field for content -->
             <textarea name="content" rows="10" cols="40"></textarea>
 
             <br><br><br>
