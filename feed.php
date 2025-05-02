@@ -48,6 +48,8 @@
         <br><br>
 
         <?php
+            require_once '/var/www/wits.ruc.dk/db.php'; // Access to WITS course API.
+
             $posts = get_pids(); // Receives array with all post id's made by all users.
 
             foreach ($posts as $pid){ // Takes posts array and makes a new variable pid for every iteration in the loop.
@@ -61,6 +63,24 @@
                 echo "<br>";
                 echo "</div>";
                 echo "<br><br>";
+
+                $comments = get_cids_by_pid($pid);
+
+                foreach ($comments as $cid){ // Tager comments array og laver ny variable cid for hver iteration.
+                    $comment = get_comment($pid); // Modtager et array med information om nuværende iterations kommentar.
+                    $commentUser = get_user($comment['uid']); // Modtager et array med information om nuværende iterations user.
+                    $commentUid = $commentUser['uid']; // Sætter variablen commentUid til kommentarens users uid.
+                    echo "<br><b>";
+                    echo "<a href='https://wits.ruc.dk/~stud-madd/Afleveringer/Aflevering02/postList.php?uid=$commentUid'>"; // Gør efterfølgende tekst til link til postList.
+                    echo $commentUser ['firstname']; // Viser firstname fra commentUser array.
+                    echo " ";
+                    echo $commentUser ['lastname']; // Viser lastname fra commentUser array.
+                    echo "</a></b> - "; // Slutter link samt fed skrift.
+                    echo $comment ['date']; // Viser date fra comment array.
+                    echo "<br>";
+                    echo $comment ['content']; // Viser content fra comment array.
+                    echo "<br>";
+                }
             }
         ?>
 
