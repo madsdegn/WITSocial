@@ -1,4 +1,4 @@
-<!-- Create Post -->
+<!-- userFeed -->
 
 <!-- Mads Degn, Daniel Pedersen, Liva Plougmann Sørensen, Magnus Østergaard -->
 <!-- 27/03-25 -->

@@ -42,7 +42,7 @@
         #title {
             font-family: Arial, sans-serif;
             text-align: center;
-            background-color: white;
+            background-color: lightgrey;
             width: 300px;
             border: 7px solid black;
             padding: 2px;
@@ -55,7 +55,7 @@
         #login {
             font-family: Arial, sans-serif;
             text-align: left;
-            background-color: white;
+            background-color: lightgrey;
             width: 400px;
             border: 7px solid black;
             padding: 50px;
@@ -105,10 +105,11 @@
                 // If login function returns true, redirect user to secrets.php file and prevent further code execution.
                 // If login function returns false, set message variable to Credentials Incorrect.
                 if(login($uid, $password)) {
-                    header("Location: createPost.php");
+                    header("Location: feed.php");
                     exit();
                 } else {
-                    $message = "<br><br>Credentials Incorrect";                }
+                    $message = "<br><br>Credentials Incorrect";                
+                }
             }
         ?>
 
@@ -146,6 +147,12 @@
             <?php 
             echo $message; 
             ?>
+            </div>
+
+            <br><br>
+            <div style="text-align: center; font-size: 18px;">
+                Don't have an account?
+                <a href="signup.php">Sign up</a>
             </div>
         </div>
 
