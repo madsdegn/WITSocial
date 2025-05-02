@@ -48,7 +48,7 @@
         <br><br>
 
         <?php
-            $posts = get_pids_by_uid($uid); // Receives array with all post id's made by user from current session.
+            $posts = get_pids(); // Receives array with all post id's made by all users.
 
             foreach ($posts as $pid){ // Takes posts array and makes a new variable pid for every iteration in the loop.
                 $post = get_post($pid); // Receives an array with information regarding the current iterations post.
