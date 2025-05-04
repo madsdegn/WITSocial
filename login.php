@@ -152,7 +152,7 @@
             <br><br>
             <div style="text-align: center; font-size: 18px;">
                 Don't have an account?
-                <a href="signup.php">Sign up</a>
+                <a href="createUser.php">Sign up</a>
             </div>
         </div>
 
