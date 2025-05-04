@@ -8,17 +8,45 @@
     <head>
     <style>
 
-        /* CSS selector for WITSocial logo at top of webpage. */
-        /* Applies styles to the <div> with id "Title". */
+        .title-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 0 auto;
+            max-width: 900px;
+            padding: 10px;
+        }
+
         #title {
             font-family: Arial, sans-serif;
-            text-align: center;
             background-color: lightgrey;
             width: 300px;
             border: 7px solid black;
             padding: 2px;
-            margin: auto;
             font-size: 45px;
+            text-align: center;
+            margin: auto;
+        }
+
+        .right-boxes {
+            position: absolute;
+            top: 35px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .box {
+            font-family: Arial, sans-serif;
+            background-color: lightgrey;
+            border: 7px solid black;
+            width: 150px;
+            padding: 2px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            cursor: pointer;
         }
 
         /* CSS selector for posts. */
@@ -40,9 +68,22 @@
         <br>
         
         <!-- Creates division with id title and writes WITS in capital lettes followed by ocial in non-capital letters. -->
-        <div id="title">
-            <b>WITS</b>ocial
+        <div class="title-container">
+            <div id="title">
+                <b>WITS</b>ocial
+            </div>
+        <div class="right-boxes">
+                <button class="box"><b>Create Post</button>
+
+                <?php
+                if (session_status() === PHP_SESSION_ACTIVE) {
+                    echo "<button class='box'>Sign In</b></button>";
+                } else {
+                    echo "<button class='box'>Sign Out</b></button>";
+                }
+                ?>
         </div>
+    </div>
 
         <br><br>
 

@@ -96,7 +96,7 @@
 
         <!-- Creates division with id createPost. -->
         <div id="createUser">
-            To sign up as a user on <b>WITS</b>ocial, please enter a <b>User ID</b>, your <b>first</b> and <b>lastname</b> and a <b>password</b>.
+            To sign up as a user on <b>WITS</b>ocial, please enter a <b>User ID</b>, your <b>First Name</b>, <b>Last Name</b> and a <b>Password</b>.
 
             <br><br><br>
             
@@ -112,7 +112,7 @@
 
             <br><br><br>
 
-            <b>Firstname</b>
+            <b>First Name</b>
 
             <br><br>
 
@@ -121,7 +121,7 @@
 
             <br><br><br>
 
-            <b>Lastname</b>
+            <b>Last Name</b>
 
             <br><br>
 
