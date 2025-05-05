@@ -39,13 +39,13 @@
         .box {
             font-family: Arial, sans-serif;
             background-color: lightgrey;
-            border: 7px solid black;
+            border: 5px solid black;
             width: 150px;
             padding: 2px;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 24px;
+            font-size: 20px;
             cursor: pointer;
         }
 
@@ -61,6 +61,27 @@
             font-size: 20px;
         }
 
+        /* CSS attribute selector for text fields.*/
+        /* Applies styles to input elements with attribute 'textarea'. */
+        textarea { 
+            font-size: 20px;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        /* CSS attribute selector for submit button. */
+        /* Applies styles to input elements with attribute input='submit'. */
+        input[type='submit'] { 
+            font-size: 20px;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            position: absolute;
+            left: 50%;
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+        }
+
     </style>
     </head>
     <body>
@@ -73,13 +94,21 @@
                 <b>WITS</b>ocial
             </div>
         <div class="right-boxes">
-                <button class="box"><b>Create Post</button>
-
                 <?php
-                if (session_status() === PHP_SESSION_ACTIVE) {
-                    echo "<button class='box'>Sign In</b></button>";
+                session_start();
+
+                if (!empty($_SESSION['uid']) && !empty($_SESSION['password'])) {
+                    echo "<form action='createPost.php' method='get'>";
+                    echo "<button class='box' type='submit'><b>Create Post</b></button>";
+                    echo "</form>";
+
+                    echo "<form action='logout.php' method='get'>";
+                    echo "<button class='box'><b>Sign Out</b></button>";
+                    echo "</form>";
                 } else {
-                    echo "<button class='box'>Sign Out</b></button>";
+                    echo "<form action='login.php' method='get'>";
+                    echo "<button class='box'><b>Sign In</b></button>";
+                    echo "</form>";
                 }
                 ?>
         </div>
@@ -99,11 +128,19 @@
                 $postUser = get_user($post['uid']);
                 echo "<div id='posts'>"; // Creates division with id posts and makes each post each own CSS Box. -->
                 echo "<b>";
+
                 echo "<div style='text-align: center;'>";
-                echo $postUser ['firstname'];
+                if (empty($postUser['firstname'])) {
+                } else {
+                echo $postUser['firstname'];
                 echo " ";
-                echo $postUser ['lastname'];
-                echo "</b></div><br><br><b>";
+                }
+                if (empty($postUser['lastname'])) {
+                } else {
+                echo $postUser['lastname'];
+                echo "<br><br><br>";
+                }
+                echo "</b></div><b>";
                 echo "<div style='text-align: left;'>";
                 echo $post ['title']; // Displays title from post array.
                 echo "</b><br><br><br>";
@@ -143,6 +180,30 @@
                                 echo "<br>";
                             }
                         }
+                        
+                            if (!empty($_SESSION['uid']) && !empty($_SESSION['password'])) {
+                                if($_SERVER["REQUEST_METHOD"] == "POST"){
+                                    $content = $_POST['content'] ?? '';
+                                    $pid = $_POST['pid'] ?? null;
+                    
+                                    $uid = $_SESSION["uid"]; // Takes uid from sessions and sets it as variable.
+                                    add_comment($uid, $pid, $content); // Uses API function to create post with inserted content and uid from session.
+                                    header("Location: feed.php"); // Sends user to userFeed.php to see post just created.
+                                        exit();
+                                }
+
+                                echo "<form method='POST' action=''>";
+                                echo "<input type='hidden' name='pid' value='$pid'>";
+                                echo "<div style='text-align: center;'>";
+                                echo "<b><br><br>Add comment</b>";
+                                echo "</div>";
+                                echo "<br>";
+                                echo "<textarea name='content' rows='1' cols='44'></textarea>";
+                                echo "<br><br>";
+                                echo "<input type='submit' value='Submit'>";
+                                echo "</form>";
+
+                            }
                 echo "</div>";
                 echo "</div>";
                 echo "<br><br>";
