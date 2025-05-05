@@ -156,6 +156,15 @@
                     echo "<br></div>";
                 }
 
+                if ($post['uid'] == $_SESSION['uid']) {
+                    echo "<br><br>";
+                    // EDIT button
+                    echo "<form action='editPost.php' method='get'>";
+                    echo "<input type='hidden' name='pid' value='" . $pid . "'>";
+                    echo "<input type='submit' value='Edit'>";
+                    echo "</form>";
+                }
+
                 $comments = get_cids_by_pid($pid);
 
                 if (empty($comments)) {} else {
