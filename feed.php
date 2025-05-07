@@ -198,8 +198,10 @@
 
                 if ($post['uid'] == $_SESSION['uid']) {
                     echo "<br><br>";
-                    echo "<form action='editPost.php' method='get'>";
-                    echo "<input type='hidden' name='pid' value='" . $pid . "'>";
+                    echo "<form action='editPost.php' method='POST'>";
+                    echo "<input type='hidden' name='pid' value='" . htmlspecialchars($pid) . "'>";
+                    echo "<input type='hidden' name='title' value='" . htmlspecialchars($post['title'], ENT_QUOTES) . "'>";
+                    echo "<input type='hidden' name='content' value='" . htmlspecialchars($post['content'], ENT_QUOTES) . "'>";
                     echo "<input type='submit' value='Edit'>";
                     echo "</form>";
                 }
@@ -229,7 +231,7 @@
 
                                     if($_SERVER["REQUEST_METHOD"] == "POST"){
                                         $content = $_POST['content'] ?? '';
-                                        $pid = $_POST['pid'] ?? '';
+                                        $pid = $_POST['pid'] ?? null;
 
                                         $uid = $_SESSION["uid"]; // Takes uid from sessions and sets it as variable.
                                         add_comment($uid, $pid, $content); // Uses API function to create post with inserted content and uid from session.

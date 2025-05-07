@@ -10,15 +10,16 @@
 
         /* CSS selector for WITSocial logo at top of webpage. */
         /* Applies styles to the <div> with id "Title". */
-        #title {
+        .title {
             font-family: Arial, sans-serif;
-            text-align: center;
             background-color: lightgrey;
             width: 300px;
             border: 7px solid black;
             padding: 2px;
-            margin: auto;
             font-size: 45px;
+            text-align: center;
+            margin: auto;
+            cursor: pointer;
         }
 
         /* CSS selector for main user creation part of webpage. */
@@ -63,16 +64,48 @@
             transform: translate(-50%, -50%);
         }
 
+        .left-box {
+            font-family: Arial, sans-serif;
+            background-color: lightgrey;
+            border: 5px solid black;
+            width: 150px;
+            padding: 2px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            position: absolute;
+            top: 35px;
+            left: 20px;
+            font-weight: bold;
+        }
+
+        .title-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
+            max-width: 900px;
+            padding: 10px;
+        }
+
     </style>
     </head>
     <body>
 
         <br>
         
-        <!-- Creates division with id title and writes WITS in capital lettes followed by ocial in non-capital letters. -->
-        <div id="title">
-            <b>WITS</b>ocial
-        </div>
+        <div class="title-container">
+           
+            <?php
+            echo "<form action='feed.php' method='get'>";
+            echo "<button class='title' type='submit'><b>WITS</b>ocial</button>";
+            echo "</form>";
+            ?>
+    </div>
+
+    <div class="left-box" id="clock"><b>00:00:00</b></div> 
+
 
         <br><br>
 
@@ -101,7 +134,7 @@
             <br><br><br>
             
             <!-- Creates form that is secure and submits data to current URL (same page). -->
-            <form method="POST" action="">
+            <form id="signup-form" method="POST" action="">
             
             <b>User ID</b>
 
@@ -148,7 +181,7 @@
         <br><br>
 
         <script>
-            document.querySelector("form").addEventListener("submit", function(event) {
+            document.querySelector("#signup-form").addEventListener("submit", function(event) {
             const password = document.getElementById("password").value;
 
             if (password.length < 8) {
@@ -157,5 +190,19 @@
             }
             });
         </script>
+
+        <script>
+            function updateClock() {
+                const now = new Date();
+                const hours = String(now.getHours()).padStart(2, '0');
+                const minutes = String(now.getMinutes()).padStart(2, '0');
+                const seconds = String(now.getSeconds()).padStart(2, '0');
+                document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
+            }
+
+            setInterval(updateClock, 1000);
+            updateClock();
+        </script>
+
     </body>
 </html>
