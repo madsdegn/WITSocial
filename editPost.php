@@ -1,13 +1,16 @@
-<!-- createPost.php -->
+<!-- Edit Post -->
+
+<!-- This is a php program that allows users to edit their own posts. -->
 
 <!-- Mads Degn, Daniel Pedersen, Liva Plougmann Sørensen, Magnus Østergaard -->
-<!-- 27/03-25 -->
+<!-- 08/05-25 -->
 
 <!DOCTYPE html>
 <html>
 <head>
     <style>
-        /* Styles the main title box */
+
+        /* Applies styles to the <div> with id "title". */
         .title {
             font-family: Arial, sans-serif;
             text-align: center;
@@ -19,7 +22,8 @@
             font-size: 45px;
             cursor: pointer;
         }
-
+        
+        /* Applies styles to the <div> with id "title-container". */
         .title-container {
             display: flex;
             justify-content: center;
@@ -29,8 +33,8 @@
             padding: 10px;
         }
 
-        /* Styles the post creation container */
-        #createPost {
+        /* Applies styles to the <div> with id "editPost". */
+        #editPost {
             font-family: Arial, sans-serif;
             text-align: center;
             background-color: lightgrey;
@@ -41,6 +45,7 @@
             font-size: 20px;
         }
 
+        /* Applies styles to the <div> with id "right-boxes". */
         .right-boxes {
             position: absolute;
             top: 35px;
@@ -49,6 +54,7 @@
             gap: 10px;
         }
 
+        /* Applies styles to the <div> with id "box". */
         .box {
             font-family: Arial, sans-serif;
             background-color: lightgrey;
@@ -62,14 +68,14 @@
             cursor: pointer;
         }
 
-        /* Styles text areas for title and content */
+        /* Applies styles to the input type textarea. */
         textarea { 
             font-size: 20px;
             font-family: Arial, sans-serif;
             text-align: center;
         }
 
-        /* Styles the submit button and centers it */
+        /* Applies styles to the input type submit. */
         input[type='submit'] { 
             font-size: 20px;
             font-family: Arial, sans-serif;
@@ -81,7 +87,7 @@
             transform: translate(-50%, -50%);
         }
 
-        /* Styles a left-aligned box (e.g. for a clock) */
+        /* Applies styles to the <div> with id "left-box". */
         .left-box {
             font-family: Arial, sans-serif;
             background-color: lightgrey;
@@ -102,119 +108,134 @@
 </head>
 <body>
 
+    <br>
 
-<br>
+    <!-- Form to return to main "feed page" -->
+    <div class="title-container">
 
-<div class="title-container">
-           
-            <?php
-            echo "<form action='feed.php' method='get'>";
-            echo "<button class='title' type='submit'><b>WITS</b>ocial</button>";
-            echo "</form>";
-            ?>
+        <?php
+        echo "<form action='feed.php' method='get'>";
+        echo "<button class='title' type='submit'><b>WITS</b>ocial</button>";
+        echo "</form>";
+        ?>
+
     </div>
- <div class="left-box" id="clock">00:00:00</div> 
-<br><br>
 
-<div class="right-boxes">
-                <?php
-                session_start();
+    <!-- Division for clock top left. -->
+    <div class="left-box" id="clock">00:00:00
+    </div>
 
-                if (!empty($_SESSION['uid']) && !empty($_SESSION['password'])) {
-                    echo "<form action='userList.php' method='get'>";
-                    echo "<button class='box' type='submit'><b>User List</b></button>";
-                    echo "</form>";
-                    
-                    echo "<form action='createPost.php' method='get'>";
-                    echo "<button class='box' type='submit'><b>Create Post</b></button>";
-                    echo "</form>";
+    <br><br>
 
-                    echo "<form action='logout.php' method='get'>";
-                    echo "<button class='box'><b>Sign Out</b></button>";
-                    echo "</form>";
-                } else {
-                    echo "<form action='userList.php' method='get'>";
-                    echo "<button class='box' type='submit'><b>User List</b></button>";
-                    echo "</form>";
-                    
-                    echo "<form action='login.php' method='get'>";
-                    echo "<button class='box'><b>Sign In</b></button>";
-                    echo "</form>";
-                }
-                ?>
-        </div>
+    <!-- Division for buttons top right. -->
+    <div class="right-boxes">
+                
+        <?php
+            session_start();
 
-<?php
-    require_once '/var/www/wits.ruc.dk/db.php'; // Access to WITS course API.
-    // Retrieve title and content from submitted data. Set value as null if title or content is not set.
+            // Buttons to userList, createPost, and logout. Only shown if sessions uid and session password are not empty.
+            if (!empty($_SESSION['uid']) && !empty($_SESSION['password'])) {
+                echo "<form action='userList.php' method='get'>";
+                echo "<button class='box' type='submit'><b>User List</b></button>";
+                echo "</form>";
+                
+                echo "<form action='createPost.php' method='get'>";
+                echo "<button class='box' type='submit'><b>Create Post</b></button>";
+                echo "</form>";
 
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $title = $_POST['title'] ?? '';
-        $content = $_POST['content'] ?? '';
-        $pid = $_POST['pid'] ?? null;
-        $uid = $_SESSION["uid"];// Takes uid from sessions and sets it as variable.    
-
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_edit'])) {
-            $pid = $_POST['pid'] ?? null;
-            $newTitle = $_POST['title'] ?? '';
-            $newContent = $_POST['content'] ?? '';
-            $uid = $_SESSION['uid'] ?? null;
-
-            if ($pid && $uid && $newTitle && $newContent) {
-                modify_post($pid, $newTitle, $newContent); // Your update function
-                header("Location: feed.php");
-                exit();
-    exit();
+                echo "<form action='logout.php' method='get'>";
+                echo "<button class='box'><b>Sign Out</b></button>";
+                echo "</form>";
+            
+            // Buttons for userList and login. Only shown if sessions uid and sessions password are empty.
+            } else {
+                echo "<form action='userList.php' method='get'>";
+                echo "<button class='box' type='submit'><b>User List</b></button>";
+                echo "</form>";
+                
+                echo "<form action='login.php' method='get'>";
+                echo "<button class='box'><b>Sign In</b></button>";
+                echo "</form>";
             }
-    }
-}
-?>
+        ?>
+    </div>
 
-<!-- Container for creating a new post -->
-<div id="createPost">
-    To modify your post, please edit your <b>Title</b> and/or <b>Content</b>.
-
-    <br><br><br>
-
-    <!-- Form for submitting a post with optional image upload -->
-    <form method="POST" action="" enctype="multipart/form-data">
-        <input type="hidden" name="pid" value="<?= htmlspecialchars($pid ?? '') ?>">
+    <?php
+        require_once '/var/www/wits.ruc.dk/db.php'; // Access to WITS course API.
         
-        <label><b>Title</b></label><br><br>
-        <textarea name="title" rows="1" cols="40"><?= htmlspecialchars($title ?? '', ENT_QUOTES) ?></textarea><br><br><br>
+        // Retrieve title, content and pid from post from feed. Set value as null or empty string if title or content is not set.
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $title = $_POST['title'] ?? '';
+            $content = $_POST['content'] ?? '';
+            $pid = $_POST['pid'] ?? null;
+            $uid = $_SESSION["uid"];// Takes uid from sessions and sets it as variable.    
 
-        <label><b>Content</b></label><br><br>
-        <textarea name="content" rows="10" cols="40"><?= htmlspecialchars($content ?? '') ?></textarea><br><br>
+            // Check again that the form was submitted via POST and that the submit button named 'submit_edit' was clicked
+            if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_edit'])) {
+                
+                // Redefine the post data to ensure it's fresh from post from feed.
+                $pid = $_POST['pid'] ?? null;
+                $newTitle = $_POST['title'] ?? '';
+                $newContent = $_POST['content'] ?? '';
+                $uid = $_SESSION['uid'] ?? null;
 
-        <!-- Submit button -->
-        <input type="submit" name="submit_edit" value="Save">
-    </form>
-</div>
+                // If all required values are present, update the post using the modify_post() function
+                if ($pid && $uid && $newTitle && $newContent) {
+                    modify_post($pid, $newTitle, $newContent);
+                    header("Location: feed.php");
+                    exit();
+                }
+            }
+        }
+    ?>
 
-<br><br>
-<script> // JavaScript for the live-updating clock
+    <!-- Division for main part of page. -->
+    <div id="editPost">
+        To modify your post, please edit your <b>Title</b> and/or <b>Content</b>.
 
-    // Function that updates the clock
-    function updateClock() {
-        const now = new Date(); // Gets the computer's current date and time
+        <br><br><br>
 
-        // Extracts hours, minutes, and seconds, and ensures two digits ('09' instead of '9')
-        const hours = String(now.getHours()).padStart(2, '0');
-        const minutes = String(now.getMinutes()).padStart(2, '0');
-        const seconds = String(now.getSeconds()).padStart(2, '0');
+        <!-- Form for editing the post. -->
+        <form method="POST" action="" enctype="multipart/form-data">
+            <input type="hidden" name="pid" value="<?= htmlspecialchars($pid ?? '') ?>">
+            
+            <!-- Title input. -->
+            <label><b>Title</b></label><br><br>
+            <textarea name="title" rows="1" cols="40"><?= htmlspecialchars($title ?? '', ENT_QUOTES) ?></textarea><br><br><br>
 
-        // Updates the text content of the HTML element with id="clock"
-        document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
-    }
+            <!-- Content input. -->
+            <label><b>Content</b></label><br><br>
+            <textarea name="content" rows="10" cols="40"><?= htmlspecialchars($content ?? '') ?></textarea><br><br>
 
-    // Runs updateClock every 1000 milliseconds (1 second)
-    setInterval(updateClock, 1000);
+            <!-- Submit button. -->
+            <input type="submit" name="submit_edit" value="Save">
+        </form>
+    </div>
 
-    // Runs the function once immediately so the clock doesn't start empty
-    updateClock();
+    <br><br>
+        
+    <script> // JavaScript for the live-updating clock.
 
-</script>
+        // Function that updates the clock.
+        function updateClock() {
+            const now = new Date(); // Gets the computer's current date and time.
 
+            // Extracts hours, minutes, and seconds, and ensures two digits ('09' instead of '9').
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+
+            // Updates the text content of the HTML element with id="clock".
+            document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
+        }
+
+        // Runs updateClock every 1000 milliseconds (1 second).
+        setInterval(updateClock, 1000);
+
+        // Runs the function once immediately so the clock doesn't start empty.
+        updateClock();
+
+    </script>
 
 </body>
 </html>

@@ -1,21 +1,23 @@
 <!-- Attach -->
 
+<!-- This is a php program which attaches an image to a post. -->
+
 <!-- Mads Degn, Daniel Pedersen, Liva Plougmann Sørensen, Magnus Østergaard -->
-<!-- 07/05-25 -->
+<!-- 08/05-25 -->
 
 <?php
+
   require_once '/var/www/wits.ruc.dk/db.php'; // Access to WITS course API.
 
+  $postsArray = get_pids();  // Receiving an array containing all post ID's.
 
-$PostsArray = get_pids();  //$PostsArray is set to array of all post id's
+  $imagesArray = get_iids(); // Receiving an array containing all image ID's.
 
-$ImagesArray = get_iids(); //$ImagesArray is set to array of all image id's
+  $alt = end($postsArray); // Sets variable to last index of postsArray.
+  $iid = end($imagesArray); // Sets variable to last index of imageArray.
 
-$alt = end($PostsArray); //$alt is set to last index of $PostsArray
-$iid = end($ImagesArray); //$iid is set to last index of $ImagesArray
+  add_attachment($alt, $iid); // Function to attach $alt and $iid in WITS database.
 
-add_attachment($alt, $iid); //Function to attach $alt and $iid 
-
-header("Location: feed.php"); //Sends user to the feed. 
+  header("Location: feed.php"); // Sends user to feed.php.
 
 ?>

@@ -1,15 +1,16 @@
 <!-- Create User -->
 
+<!-- This is a php program for creating a new user in the WITS database. -->
+
 <!-- Mads Degn, Daniel Pedersen, Liva Plougmann Sørensen, Magnus Østergaard -->
-<!-- 04/05-25 -->
+<!-- 08/05-25 -->
 
 <!DOCTYPE html>
 <html>
-    <head>
+<head>
     <style>
 
-        /* CSS selector for WITSocial logo at top of webpage. */
-        /* Applies styles to the <div> with id "Title". */
+        /* Applies styles to the <div> with id "title". */
         .title {
             font-family: Arial, sans-serif;
             background-color: lightgrey;
@@ -22,8 +23,7 @@
             cursor: pointer;
         }
 
-        /* CSS selector for main user creation part of webpage. */
-        /* Applies styles to the <div> with id "createPost". */
+        /* Applies styles to the <div> with id "createUser". */
         #createUser {
             font-family: Arial, sans-serif;
             text-align: center;
@@ -35,24 +35,21 @@
             font-size: 20px;
         }
 
-        /* CSS attribute selector for username field.*/
-        /* Applies styles to input elements with attribute input='text'. */
+        /* Applies styles to the input type text. */
         input[type='text'] { 
             font-size: 20px;
             font-family: Arial, sans-serif;
             text-align: center;
         }
 
-        /* CSS attribute selector for password field. */
-        /* Applies styles to input elements with attribute input='password'. */
+        /* Applies styles to the input type password. */
         input[type='password'] { 
             font-size: 20px;
             font-family: Arial, sans-serif;
             text-align: center;
         }
 
-        /* CSS attribute selector for submit button. */
-        /* Applies styles to input elements with attribute input='submit'. */
+        /* Applies styles to the input type submit. */
         input[type='submit'] { 
             font-size: 20px;
             font-family: Arial, sans-serif;
@@ -64,6 +61,7 @@
             transform: translate(-50%, -50%);
         }
 
+        /* Applies styles to the <div> with id "left-box". */
         .left-box {
             font-family: Arial, sans-serif;
             background-color: lightgrey;
@@ -80,6 +78,7 @@
             font-weight: bold;
         }
 
+        /* Applies styles to the <div> with id "title-container". */
         .title-container {
             display: flex;
             justify-content: center;
@@ -90,57 +89,58 @@
         }
 
     </style>
-    </head>
-    <body>
+</head>
+<body>
 
-        <br>
-        
-        <div class="title-container">
-           
-            <?php
+    <br>
+
+    <!-- Form to return to main "feed page" -->
+    <div class="title-container">
+
+        <?php
             echo "<form action='feed.php' method='get'>";
             echo "<button class='title' type='submit'><b>WITS</b>ocial</button>";
             echo "</form>";
-            ?>
-    </div>
-
-    <div class="left-box" id="clock"><b>00:00:00</b></div> 
-
-
-        <br><br>
-
-        <!-- php section. -->
-        <?php
-            require_once '/var/www/wits.ruc.dk/db.php'; // Access to WITS course API.
-
-            // Check if form is submitted.
-            // Retrieve title and content from submitted data. Set value as null if title or content is not set.
-            if($_SERVER["REQUEST_METHOD"] == "POST"){
-                $uid = $_POST['uid'] ?? '';
-                $firstname = $_POST['firstname'] ?? '';
-                $lastname = $_POST['lastname'] ?? '';
-                $password = $_POST['password'] ?? '';
-
-                add_user($uid, $firstname, $lastname, $password);
-                header("Location: login.php"); // Sends user to login.php to log in.
-                    exit();
-            }
         ?>
 
-        <!-- Creates division with id createPost. -->
-        <div id="createUser">
-            To sign up as a user on <b>WITS</b>ocial, please enter a <b>User ID</b>, your <b>First Name</b>, <b>Last Name</b> and a <b>Password</b>.
+    </div>
 
-            <br><br><br>
+    <!-- Division for clock top left. -->
+    <div class="left-box" id="clock">00:00:00
+    </div>
+
+    <br><br>
+
+    <?php
+        require_once '/var/www/wits.ruc.dk/db.php'; // Access to WITS course API.
+
+        // Check if form is submitted.
+        // Retrieve uid, firstname, lastname and password from submitted data. Set value as empty string if title or content is not set.
+        if($_SERVER["REQUEST_METHOD"] == "POST"){
+            $uid = $_POST['uid'] ?? '';
+            $firstname = $_POST['firstname'] ?? '';
+            $lastname = $_POST['lastname'] ?? '';
+            $password = $_POST['password'] ?? '';
+
+            add_user($uid, $firstname, $lastname, $password);
+            header("Location: login.php"); // Sends user to login.php to log in.
+            exit();
+        }
+    ?>
+
+    <!-- Division for main part of page. -->
+    <div id="createUser">
+        To sign up as a user on <b>WITS</b>ocial, please enter a <b>User ID</b>, your <b>First Name</b>, <b>Last Name</b> and a <b>Password</b>.
+
+        <br><br><br>
             
-            <!-- Creates form that is secure and submits data to current URL (same page). -->
-            <form id="signup-form" method="POST" action="">
+        <form id="signup-form" method="POST" action="">
             
             <b>User ID</b>
 
             <br><br>
 
-            <!-- Creates field for title -->
+            <!-- Uid Input. -->
             <input type="text" id="uid" name="uid" value="Example">
 
             <br><br><br>
@@ -149,7 +149,7 @@
 
             <br><br>
 
-            <!-- Creates field for content -->
+            <!-- First name input. -->
             <input type="text" id="firstname" name="firstname" value="Example">
 
             <br><br><br>
@@ -158,7 +158,7 @@
 
             <br><br>
 
-            <!-- Creates field for content -->
+            <!-- Last name input. -->
             <input type="text" id="lastname" name="lastname" value="Example">
 
             <br><br><br>
@@ -167,61 +167,65 @@
 
             <br><br>
 
-            <!-- Creates field for content -->
+            <!-- Password input. -->
             <input type="password" id="password" name="password" value="Example">
 
             <br>
 
+            <!-- Element to toggle between password visibility -->
             <div style='text-align: center;'>
-            <!-- An element to toggle between password visibility -->
-             <br>
-            <input type="checkbox" onclick="myFunction()"> Show Password
+        
+                <br>
+        
+                <input type="checkbox" onclick="myFunction()"> Show Password
+        
             </div>
 
-             <script>
-            function myFunction() {
-              var x = document.getElementById("password");
-              if (x.type === "password") {
-                x.type = "text";
-              } else {
-                x.type = "password";
-              }
-            }
+            <script>
+                function myFunction() {
+                    var x = document.getElementById("password");
+                    if (x.type === "password") {
+                        x.type = "text";
+                    } else {
+                        x.type = "password";
+                    }
+                }
             </script>
 
             <br><br><br>
 
-            <!-- Submit button for form. -->
+            <!-- Submit button. -->
             <input type="submit" value="Sign Up">
-            </form>
 
-        </div>
+        </form>
 
-        <br><br>
+    </div>
 
-        <script>
-            document.querySelector("#signup-form").addEventListener("submit", function(event) {
-            const password = document.getElementById("password").value;
+    <br><br>
 
-            if (password.length < 8) {
-            alert("Password must be at least 8 characters long.");
-            event.preventDefault(); // Prevent form from submitting
-            }
-            });
-        </script>
+    <!-- Element to prevent passwords under 8 characters. -->
+    <script>
 
-        <script>
-            function updateClock() {
-                const now = new Date();
-                const hours = String(now.getHours()).padStart(2, '0');
-                const minutes = String(now.getMinutes()).padStart(2, '0');
-                const seconds = String(now.getSeconds()).padStart(2, '0');
-                document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
-            }
+        // Function that updates the clock.
+        function updateClock() {
+            const now = new Date(); // Gets the computer's current date and time.
 
-            setInterval(updateClock, 1000);
-            updateClock();
-        </script>
+            // Extracts hours, minutes, and seconds, and ensures two digits ('09' instead of '9').
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
 
-    </body>
+            // Updates the text content of the HTML element with id="clock".
+            document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
+        }
+
+        // Runs updateClock every 1000 milliseconds (1 second).
+        setInterval(updateClock, 1000);
+
+        // Runs the function once immediately so the clock doesn't start empty.
+        updateClock();
+
+    </script>
+
+</body>
 </html>
