@@ -121,6 +121,10 @@
                 session_start();
 
                 if (!empty($_SESSION['uid']) && !empty($_SESSION['password'])) {
+                    echo "<form action='userList.php' method='get'>";
+                    echo "<button class='box' type='submit'><b>User List</b></button>";
+                    echo "</form>";
+                    
                     echo "<form action='createPost.php' method='get'>";
                     echo "<button class='box' type='submit'><b>Create Post</b></button>";
                     echo "</form>";
@@ -129,6 +133,10 @@
                     echo "<button class='box'><b>Sign Out</b></button>";
                     echo "</form>";
                 } else {
+                    echo "<form action='userList.php' method='get'>";
+                    echo "<button class='box' type='submit'><b>User List</b></button>";
+                    echo "</form>";
+                    
                     echo "<form action='login.php' method='get'>";
                     echo "<button class='box'><b>Sign In</b></button>";
                     echo "</form>";

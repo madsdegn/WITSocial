@@ -102,6 +102,10 @@
                 session_start();
 
                 if (!empty($_SESSION['uid']) && !empty($_SESSION['password'])) {
+                    echo "<form action='userList.php' method='get'>";
+                    echo "<button class='box' type='submit'><b>User List</b></button>";
+                    echo "</form>";
+                    
                     echo "<form action='createPost.php' method='get'>";
                     echo "<button class='box' type='submit'><b>Create Post</b></button>";
                     echo "</form>";
@@ -110,6 +114,10 @@
                     echo "<button class='box'><b>Sign Out</b></button>";
                     echo "</form>";
                 } else {
+                    echo "<form action='userList.php' method='get'>";
+                    echo "<button class='box' type='submit'><b>User List</b></button>";
+                    echo "</form>";
+                    
                     echo "<form action='login.php' method='get'>";
                     echo "<button class='box'><b>Sign In</b></button>";
                     echo "</form>";
@@ -131,7 +139,7 @@ echo "<div style='text-align: left;'>";
 foreach ($users as $uid){ // Tager users array og laver ny variable uid for hver iteration af array.
     $user = get_user($uid); // Modtager et array med information om nuværende iterations user.
     echo "- ";
-    echo "<a href='https://wits.ruc.dk/~stud-madd/WITSocial/postList.php?uid=$uid'>"; // Gør efterfølgende tekst til link til postList.
+    echo "<a href='https://wits.ruc.dk/~stud-madd/WITSocial/userFeed.php?uid=$uid'>"; // Gør efterfølgende tekst til link til postList.
     echo $user ['firstname']; // Viser firstname fra user array.
     echo " ";
     echo $user ['lastname']; // Viser lastname fra user array.
