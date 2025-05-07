@@ -10,14 +10,14 @@
 
         .title-container {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
             margin: 0 auto;
             max-width: 900px;
             padding: 10px;
         }
 
-        #title {
+        .title {
             font-family: Arial, sans-serif;
             background-color: lightgrey;
             width: 300px;
@@ -26,6 +26,7 @@
             font-size: 45px;
             text-align: center;
             margin: auto;
+            cursor: pointer;
         }
 
         .right-boxes {
@@ -82,6 +83,22 @@
             transform: translate(-50%, -50%);
         }
 
+        .left-box {
+            font-family: Arial, sans-serif;
+            background-color: lightgrey;
+            border: 5px solid black;
+            width: 150px;
+            padding: 2px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            position: absolute;
+            top: 35px;
+            left: 20px;
+            font-weight: bold;
+        }
+
     </style>
     </head>
     <body>
@@ -90,9 +107,16 @@
         
         <!-- Creates division with id title and writes WITS in capital lettes followed by ocial in non-capital letters. -->
         <div class="title-container">
-            <div id="title">
-                <b>WITS</b>ocial
-            </div>
+           
+            <?php
+            echo "<form action='feed.php' method='get'>";
+            echo "<button class='title' type='submit'><b>WITS</b>ocial</button>";
+            echo "</form>";
+            ?>
+    </div>
+            <div class="left-box" id="clock"><b>00:00:00</b></div> 
+<br><br>
+
         <div class="right-boxes">
                 <?php
                 session_start();
@@ -112,12 +136,24 @@
                 }
                 ?>
         </div>
-    </div>
 
-        <br><br>
 
         <?php
             require_once '/var/www/wits.ruc.dk/db.php'; // Access to WITS course API.
+
+            if (
+                $_SERVER["REQUEST_METHOD"] === "POST" &&
+                isset($_POST['delete_comment']) &&
+                isset($_POST['cid']) &&
+                !empty($_POST['cid']) &&
+                !empty($_SESSION['uid'])
+            ) {
+                $cid = $_POST['cid'];
+            
+                delete_comment($cid);
+                header("Location: feed.php");
+                exit();
+            }
 
             $postsNormal = get_pids(); // Receives array with all post id's made by all users.
             $posts = array_reverse($postsNormal, true);
@@ -156,9 +192,12 @@
                     echo "<br></div>";
                 }
 
+                if (!isset($_SESSION['uid'])) {
+                    $_SESSION['uid'] = "NA";
+                }
+
                 if ($post['uid'] == $_SESSION['uid']) {
                     echo "<br><br>";
-                    // EDIT button
                     echo "<form action='editPost.php' method='get'>";
                     echo "<input type='hidden' name='pid' value='" . $pid . "'>";
                     echo "<input type='submit' value='Edit'>";
@@ -187,6 +226,26 @@
                                 echo "<br>";
                                 echo $comment ['content']; // Viser content fra comment array.
                                 echo "<br>";
+
+                                    if($_SERVER["REQUEST_METHOD"] == "POST"){
+                                        $content = $_POST['content'] ?? '';
+                                        $pid = $_POST['pid'] ?? '';
+
+                                        $uid = $_SESSION["uid"]; // Takes uid from sessions and sets it as variable.
+                                        add_comment($uid, $pid, $content); // Uses API function to create post with inserted content and uid from session.
+                                        header("Location: feed.php"); // Sends user to userFeed.php to see post just created.
+                                            exit();
+                                    }
+
+                                if ($commentUser['uid'] == $_SESSION['uid'] || $post['uid'] == $_SESSION['uid']){
+                                    echo "<br>";
+                                    echo "<form method='POST' action=''>";
+                                    echo "<input type='hidden' name='cid' value='" . $cid . "'>";
+                                    echo "<input type='submit' name='delete_comment' value='Delete'>";
+                                    echo "<br>";
+                                    echo "</form>";     
+                                }
+
                             }
                         }
                         
@@ -218,6 +277,19 @@
                 echo "<br><br>";
             }
         ?>
+
+        <script>
+            function updateClock() {
+                const now = new Date();
+                const hours = String(now.getHours()).padStart(2, '0');
+                const minutes = String(now.getMinutes()).padStart(2, '0');
+                const seconds = String(now.getSeconds()).padStart(2, '0');
+                document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
+            }
+
+            setInterval(updateClock, 1000);
+            updateClock();
+        </script>
 
     </body>
 </html>
