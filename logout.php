@@ -1,13 +1,15 @@
 <!-- Log Out -->
 
+<!-- This is a php program for logging out/ending current session in WITSocial. -->
+
 <!-- Mads Degn, Daniel Pedersen, Liva Plougmann Sørensen, Magnus Østergaard -->
-<!-- 04/05-25 -->
+<!-- 08/05-25 -->
 
 <!DOCTYPE html>
 <html>
     <head>
     </head>
-    <body>
+<body>
 
     <?php
         session_start();
@@ -19,5 +21,5 @@
         exit();
     ?>
 
-    </body>
+</body>
 </html>

@@ -1,31 +1,30 @@
 <!-- Login -->
 
+<!-- This is a php program where a user can log in to WITSocial. -->
+
 <!-- Mads Degn, Daniel Pedersen, Liva Plougmann Sørensen, Magnus Østergaard -->
-<!-- 13/03-25 -->
+<!-- 08/05-25 -->
 
 <!DOCTYPE html>
 <html>
-    <head>
+<head>
     <style>
 
-        /* CSS attribute selector for username field.*/
-        /* Applies styles to input elements with attribute input='text'. */
+        /* Applies styles to input type "text". */
         input[type='text'] { 
             font-size: 20px;
             font-family: Arial, sans-serif;
             text-align: center;
         }
 
-        /* CSS attribute selector for password field. */
-        /* Applies styles to input elements with attribute input='password'. */
+        /* Applies styles to input type "password". */
         input[type='password'] { 
             font-size: 20px;
             font-family: Arial, sans-serif;
             text-align: center;
         }
 
-        /* CSS attribute selector for submit button. */
-        /* Applies styles to input elements with attribute input='submit'. */
+        /* Applies styles to input type "submit". */
         input[type='submit'] { 
             font-size: 20px;
             font-family: Arial, sans-serif;
@@ -37,6 +36,7 @@
             transform: translate(-50%, -50%);
         }
 
+        /* Applies styles to the <div> with id "title-container". */
         .title-container {
             display: flex;
             justify-content: center;
@@ -46,6 +46,7 @@
             padding: 10px;
         }
 
+        /* Applies styles to the <div> with id "title". */
         .title {
             font-family: Arial, sans-serif;
             background-color: lightgrey;
@@ -58,8 +59,7 @@
             cursor: pointer;
         }
 
-        /* CSS selector for main login part of webpage. */
-        /* Applies styles to the <div> with id "Login". */
+        /* Applies styles to the <div> with id "login". */
         #login {
             font-family: Arial, sans-serif;
             text-align: left;
@@ -71,7 +71,6 @@
             font-size: 20px;
         }
 
-        /* CSS selector for credentials incorrect message. */
         /* Applies styles to the <div> with id "message". */
         #message {
             font-family: Arial, sans-serif;
@@ -80,6 +79,7 @@
             color: red;
         }
 
+        /* Applies styles to the <div> with id "left-box". */
         .left-box {
             font-family: Arial, sans-serif;
             background-color: lightgrey;
@@ -97,126 +97,146 @@
         }
 
     </style>
-    </head>
-    <body>
-        
-        <br>
-        
-        <!-- Creates division with id title and writes WITS in capital lettes followed by ocial in non-capital letters. -->
-        <div class="title-container">
-           
-            <?php
-            echo "<form action='feed.php' method='get'>";
-            echo "<button class='title' type='submit'><b>WITS</b>ocial</button>";
-            echo "</form>";
-            ?>
-    </div>
-            <div class="left-box" id="clock"><b>00:00:00</b></div> 
+</head>
+<body>
 
-        <br><br>
+    <br>
 
-        <!-- php section. -->
+    <!-- Form to return to main "feed page" -->
+    <div class="title-container">
+
         <?php
-            require_once '/var/www/wits.ruc.dk/db.php'; // Access to WITS course API.
-
-            session_start(); // Starts session for future use of user id and password.
-
-            $message = ""; // Creates message variable and sets it as empty.
-
-            // Check if form is submitted.
-            // Retrieve uid and password from submitted data. Set value as null if uid or password is not set.
-            if($_SERVER["REQUEST_METHOD"] == "POST"){
-                $uid = $_POST['uid'] ?? '';
-                $password = $_POST['password'] ?? '';
-
-                $_SESSION["uid"]=$uid; // Sets uid for future use.
-                $_SESSION["password"]=$password; //Sets password for future use.
-
-                // If login function returns true, redirect user to secrets.php file and prevent further code execution.
-                // If login function returns false, set message variable to Credentials Incorrect.
-                if(login($uid, $password)) {
-                    header("Location: feed.php");
-                    exit();
-                } else {
-                    $message = "<br><br>Credentials Incorrect";                
-                }
-            }
+        echo "<form action='feed.php' method='get'>";
+        echo "<button class='title' type='submit'><b>WITS</b>ocial</button>";
+        echo "</form>";
         ?>
 
-        <!-- Creates division with id login. -->
-        <!-- Creates form that is secure and submits data to current URL (same page). -->
-        <div id="login">
-            <form method="POST" action="">
-            
+    </div>
+
+    <!-- Division for clock top left. -->
+    <div class="left-box" id="clock">00:00:00
+    </div>
+
+    <br><br>
+
+    <?php
+        require_once '/var/www/wits.ruc.dk/db.php'; // Access to WITS course API.
+
+        session_start(); // Starts session for future use of user id and password.
+
+        $message = ""; // Creates message variable and sets it as empty.
+
+        // Check if post form is submitted.
+        // Retrieve uid and password from submitted data. Set value as null if uid or password is not set.
+        if($_SERVER["REQUEST_METHOD"] == "POST"){
+            $uid = $_POST['uid'] ?? '';
+            $password = $_POST['password'] ?? '';
+
+            $_SESSION["uid"]=$uid; // Sets uid for future use.
+            $_SESSION["password"]=$password; //Sets password for future use.
+
+            // If login function returns true, redirect user to feed.php file and prevent further code execution.
+            // If login function returns false, set message variable to Credentials Incorrect.
+            if(login($uid, $password)) {
+                header("Location: feed.php");
+                exit();
+            } else {
+                $message = "<br><br>Credentials Incorrect";                
+            }
+        }
+    ?>
+
+    <!-- Creates form that is secure and submits data to current URL (same page). -->
+    <div id="login">
+        <form method="POST" action="">
+        
             <!-- Label for user id field. -->
             <label for="uid">User ID</label>
-            
+        
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <!-- Spaces. -->
-            
+        
             <!-- Input field for user id. -->
             <input type="text" id="uid" name="uid" value="Example">
-            
+        
             <br><br>
-            
+        
             <!-- Label for password field. -->
             <label for="password">Password</label>
-            
+        
             &nbsp;&nbsp;&nbsp;&nbsp; <!-- Spaces. -->
-            
+        
             <!-- Input field for password. -->
             <input type="password" id="password" name="password" value="Example">
-            
+        
             <br>
 
             <div style='text-align: center;'>
+            
             <!-- An element to toggle between password visibility -->
-             <br>
+            <br>
+            
             <input type="checkbox" onclick="myFunction()"> Show Password
+            
             </div>
 
-             <script>
-            function myFunction() {
-              var x = document.getElementById("password");
-              if (x.type === "password") {
-                x.type = "text";
-              } else {
-                x.type = "password";
-              }
-            }
+            <script>
+                function myFunction() {
+                    var x = document.getElementById("password");
+                    if (x.type === "password") {
+                        x.type = "text";
+                    } else {
+                        x.type = "password";
+                    }
+                }
             </script>
 
             <br><br><br>
             
             <!-- Submit button for form. -->
             <input type="submit" value="Log In">
-            </form>
+            
+        </form>
         
-            <!-- Creates division with id message, creates php section and displays content of message variable. -->
-            <div id="message">
+        <!-- Creates division with id message, creates php section and displays content of message variable. -->
+        <div id="message">
             <?php 
-            echo $message; 
+                echo $message; 
             ?>
-            </div>
-
-            <br><br>
-            <div style="text-align: center; font-size: 18px;">
-                Don't have an account?
-                <a href="createUser.php">Sign up</a>
-            </div>
         </div>
 
-        <script>
-            function updateClock() {
-                const now = new Date();
-                const hours = String(now.getHours()).padStart(2, '0');
-                const minutes = String(now.getMinutes()).padStart(2, '0');
-                const seconds = String(now.getSeconds()).padStart(2, '0');
-                document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
-            }
+        <br><br>
+        
+        <!-- Creates division for link to sign up. -->
+        <div style="text-align: center; font-size: 18px;">
+            
+            Don't have an account?
+            
+            <a href="createUser.php">Sign up</a>
+        </div>
+    </div>
 
-            setInterval(updateClock, 1000);
-            updateClock();
-        </script>
+    <script> // JavaScript for the live-updating clock.
 
-    </body>
+        // Function that updates the clock.
+        function updateClock() {
+            const now = new Date(); // Gets the computer's current date and time.
+
+            // Extracts hours, minutes, and seconds, and ensures two digits ('09' instead of '9').
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+
+            // Updates the text content of the HTML element with id="clock".
+            document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
+        }
+
+        // Runs updateClock every 1000 milliseconds (1 second).
+        setInterval(updateClock, 1000);
+
+        // Runs the function once immediately so the clock doesn't start empty.
+        updateClock();
+
+    </script>
+
+</body>
 </html>

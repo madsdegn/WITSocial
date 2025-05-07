@@ -205,6 +205,22 @@
 
     <!-- Element to prevent passwords under 8 characters. -->
     <script>
+        
+        // Add an event listener to the first form on the page.
+        document.querySelector("#signup-form").addEventListener("submit", function(event) {
+            
+            // Get value entered in the password input field.
+            const password = document.getElementById("password").value;
+
+            // If password is under 8 characters display error message to user.
+            if (password.length < 8) {
+                alert("Password must be at least 8 characters long.");
+                event.preventDefault(); // Prevent form from submitting
+            }
+        });
+    </script>
+
+    <script>
 
         // Function that updates the clock.
         function updateClock() {
