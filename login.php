@@ -164,8 +164,27 @@
             &nbsp;&nbsp;&nbsp;&nbsp; <!-- Spaces. -->
             
             <!-- Input field for password. -->
-            <input type="password" id="password" name="password" value="••••••••••">
+            <input type="password" id="password" name="password" value="Example">
             
+            <br>
+
+            <div style='text-align: center;'>
+            <!-- An element to toggle between password visibility -->
+             <br>
+            <input type="checkbox" onclick="myFunction()"> Show Password
+            </div>
+
+             <script>
+            function myFunction() {
+              var x = document.getElementById("password");
+              if (x.type === "password") {
+                x.type = "text";
+              } else {
+                x.type = "password";
+              }
+            }
+            </script>
+
             <br><br><br>
             
             <!-- Submit button for form. -->
